@@ -23,7 +23,7 @@ To use AlchemyAPI, you'll need to obtain an API key and attach that key to all r
 
 To get started and run the example, simply:
 
-	git clone https://github.com/steveherschleb/sdk_php.git
+	git clone https://github.com/AlchemyAPI/sdk_php.git
 	cd sdk_php
 	php alchemyapi.php YOUR_API_KEY
 	php example.php
