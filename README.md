@@ -1,6 +1,6 @@
-# sdk_php #
+# alchemyapi_php #
 
-A sdk for AlchemyAPI using PHP
+A software development kit (sdk) for AlchemyAPI using PHP
 
 
 ## AlchemyAPI ##
@@ -23,8 +23,8 @@ To use AlchemyAPI, you'll need to obtain an API key and attach that key to all r
 
 To get started and run the example, simply:
 
-	git clone https://github.com/AlchemyAPI/sdk_php.git
-	cd sdk_php
+	git clone https://github.com/AlchemyAPI/alchemyapi_php.git
+	cd alchemyapi_php
 	php alchemyapi.php YOUR_API_KEY
 	php example.php
 
