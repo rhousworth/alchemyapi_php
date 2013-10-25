@@ -3,9 +3,8 @@
 	$alchemyapi = new AlchemyAPI();
 	
 
-
 	$demo_text = 'Yesterday dumb Bob destroyed my fancy iPhone in beautiful Denver, Colorado. I guess I will have to head over to the Apple Store and buy a new one.';
-	$demo_url = 'http://blog.programmableweb.com/2011/09/16/new-api-billionaire-text-extractor-alchemy/';
+	$demo_url = 'http://semanticweb.com/semanticweb-com-%E2%80%9Cinnovation-spotlight%E2%80%9D-interview-with-elliot-turner-ceo-of-alchemyapi_b30913';
 	$demo_html = '<html><head><title>Python Demo | AlchemyAPI</title></head><body><h1>Did you know that AlchemyAPI works on HTML?</h1><p>Well, you do now.</p></body></html>';
 
 
@@ -55,43 +54,21 @@
 		echo PHP_EOL;
 		echo '## Entities ##', PHP_EOL;
 		foreach ($response['entities'] as $entity) {
-			echo 'text: ', $entity['text'], PHP_EOL;
+			echo 'entity: ', $entity['text'], PHP_EOL;
 			echo 'type: ', $entity['type'], PHP_EOL;
 			echo 'relevance: ', $entity['relevance'], PHP_EOL;
-			echo 'sentiment: ', $entity['sentiment']['type'], ' (' . $entity['sentiment']['score'] . ')', PHP_EOL;
+			echo 'sentiment: ', $entity['sentiment']['type']; 			
+			if (array_key_exists('score', $entity['sentiment'])) {
+				echo ' (' . $entity['sentiment']['score'] . ')', PHP_EOL;
+			} else {
+				echo PHP_EOL;
+			}
+			
 			echo PHP_EOL;
 		}
 	} else {
 		echo 'Error in the entity extraction call: ', $response['statusInfo'];
 	}
-
-
-	echo PHP_EOL;
-	echo PHP_EOL;
-	echo PHP_EOL;
-	echo '############################################', PHP_EOL;
-	echo '#   Sentiment Analysis Example             #', PHP_EOL;
-	echo '############################################', PHP_EOL;
-	echo PHP_EOL;
-	echo PHP_EOL;
-	
-	echo 'Processing HTML: ', $demo_html, PHP_EOL;
-	echo PHP_EOL;
-
-	$response = $alchemyapi->sentiment('html',$demo_html, null);
-
-	if ($response['status'] == 'OK') {
-		echo '## Response Object ##', PHP_EOL;
-		echo print_r($response);
-
-		echo PHP_EOL;
-		echo '## Document Sentiment ##', PHP_EOL;
-		echo 'type: ', $response['docSentiment']['type'], PHP_EOL;
-		echo 'score: ', $response['docSentiment']['score'], PHP_EOL;
-	} else {
-		echo 'Error in the sentiment analysis call: ', $response['statusInfo'];
-	}
-
 
 
 	echo PHP_EOL;
@@ -115,9 +92,14 @@
 		echo PHP_EOL;
 		echo '## Keywords ##', PHP_EOL;
 		foreach ($response['keywords'] as $keyword) {
-			echo 'text: ', $keyword['text'], PHP_EOL;
+			echo 'keyword: ', $keyword['text'], PHP_EOL;
 			echo 'relevance: ', $keyword['relevance'], PHP_EOL;
-			echo 'sentiment: ', $keyword['sentiment']['type'], ' (' . $keyword['sentiment']['score'] . ')', PHP_EOL;
+			echo 'sentiment: ', $keyword['sentiment']['type']; 			
+			if (array_key_exists('score', $keyword['sentiment'])) {
+				echo ' (' . $keyword['sentiment']['score'] . ')', PHP_EOL;
+			} else {
+				echo PHP_EOL;
+			}
 			echo PHP_EOL;
 		}
 	} else {
@@ -146,12 +128,177 @@
 		echo PHP_EOL;
 		echo '## Concepts ##', PHP_EOL;
 		foreach ($response['concepts'] as $concept) {
-			echo 'text: ', $concept['text'], PHP_EOL;
+			echo 'concept: ', $concept['text'], PHP_EOL;
 			echo 'relevance: ', $concept['relevance'], PHP_EOL;
 			echo PHP_EOL;
 		}
 	} else {
 		echo 'Error in the concept tagging call: ', $response['statusInfo'];
+	}
+
+
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo '#   Sentiment Analysis Example             #', PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	
+	echo 'Processing HTML: ', $demo_html, PHP_EOL;
+	echo PHP_EOL;
+
+	$response = $alchemyapi->sentiment('html',$demo_html, null);
+
+	if ($response['status'] == 'OK') {
+		echo '## Response Object ##', PHP_EOL;
+		echo print_r($response);
+
+		echo PHP_EOL;
+		echo '## Document Sentiment ##', PHP_EOL;
+		echo 'sentiment: ', $response['docSentiment']['type'], PHP_EOL;
+		if (array_key_exists('score', $response['docSentiment'])) {
+			echo 'score: ', $response['docSentiment']['score'], PHP_EOL;
+		}
+	} else {
+		echo 'Error in the sentiment analysis call: ', $response['statusInfo'];
+	}
+
+
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo '#   Targeted Sentiment Analysis Example    #', PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	
+	echo 'Processing text: ', $demo_text, PHP_EOL;
+	echo 'Target: Denver, Colorado', PHP_EOL;
+	echo PHP_EOL;
+
+	$response = $alchemyapi->sentiment_targeted('text',$demo_text,'Denver, Colorado', null);
+
+	if ($response['status'] == 'OK') {
+		echo '## Response Object ##', PHP_EOL;
+		echo print_r($response);
+
+		echo PHP_EOL;
+		echo '## Targeted Sentiment ##', PHP_EOL;
+		echo 'sentiment: ', $response['docSentiment']['type'], PHP_EOL;
+		if (array_key_exists('score', $response['docSentiment'])) {
+			echo 'score: ', $response['docSentiment']['score'], PHP_EOL;
+		}
+	} else {
+		echo 'Error in the targeted sentiment analysis call: ', $response['statusInfo'];
+	}
+	
+
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo '#   Text Extraction Example                #', PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	
+	echo 'Processing url: ', $demo_url, PHP_EOL;
+	echo PHP_EOL;
+
+	$response = $alchemyapi->text('url', $demo_url, null);
+
+	if ($response['status'] == 'OK') {
+		echo '## Response Object ##', PHP_EOL;
+		echo print_r($response);
+
+		echo PHP_EOL;
+		echo '## Extracted Text ##', PHP_EOL;
+		echo 'text: ',PHP_EOL, $response['text'], PHP_EOL;
+	} else {
+		echo 'Error in the text extraction call: ', $response['statusInfo'];
+	}
+	
+
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo '#   Author Extraction Example              #', PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	
+	echo 'Processing url: ', $demo_url, PHP_EOL;
+	echo PHP_EOL;
+
+	$response = $alchemyapi->author('url',$demo_url, null);
+
+	if ($response['status'] == 'OK') {
+		echo '## Response Object ##', PHP_EOL;
+		echo print_r($response);
+
+		echo PHP_EOL;
+		echo '## Author ##', PHP_EOL;
+		echo 'author: ', $response['author'], PHP_EOL;
+	} else {
+		echo 'Error in the author extraction call: ', $response['statusInfo'];
+	}
+
+	
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo '#   Language Detection Example             #', PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	
+	echo 'Processing text: ', $demo_text, PHP_EOL;
+	echo PHP_EOL;
+
+	$response = $alchemyapi->language('text',$demo_text, null);
+
+	if ($response['status'] == 'OK') {
+		echo '## Response Object ##', PHP_EOL;
+		echo print_r($response);
+
+		echo PHP_EOL;
+		echo '## Language ##', PHP_EOL;
+		echo 'language: ', $response['language'], PHP_EOL;
+		echo 'iso-639-1: ', $response['iso-639-1'], PHP_EOL;
+		echo 'native speakers: ', $response['native-speakers'], PHP_EOL;
+	} else {
+		echo 'Error in the language detection call: ', $response['statusInfo'];
+	}
+
+	
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo '#   Title Extraction Example               #', PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	
+	echo 'Processing url: ', $demo_url, PHP_EOL;
+	echo PHP_EOL;
+
+	$response = $alchemyapi->title('url',$demo_url, null);
+
+	if ($response['status'] == 'OK') {
+		echo '## Response Object ##', PHP_EOL;
+		echo print_r($response);
+
+		echo PHP_EOL;
+		echo '## Title ##', PHP_EOL;
+		echo 'title: ', $response['title'], PHP_EOL;
+	} else {
+		echo 'Error in the title extraction call: ', $response['statusInfo'];
 	}
 
 
@@ -214,7 +361,7 @@
 
 		echo PHP_EOL;
 		echo '## Category ##', PHP_EOL;
-		echo 'text: ', $response['category'], PHP_EOL;
+		echo 'category: ', $response['category'], PHP_EOL;
 		echo 'score: ', $response['score'], PHP_EOL;
 	} else {
 		echo 'Error in the text categorization call: ', $response['statusInfo'];
@@ -225,61 +372,7 @@
 	echo PHP_EOL;
 	echo PHP_EOL;
 	echo '############################################', PHP_EOL;
-	echo '#   Language Detection Example             #', PHP_EOL;
-	echo '############################################', PHP_EOL;
-	echo PHP_EOL;
-	echo PHP_EOL;
-	
-	echo 'Processing text: ', $demo_text, PHP_EOL;
-	echo PHP_EOL;
-
-	$response = $alchemyapi->language('text',$demo_text, null);
-
-	if ($response['status'] == 'OK') {
-		echo '## Response Object ##', PHP_EOL;
-		echo print_r($response);
-
-		echo PHP_EOL;
-		echo '## Language ##', PHP_EOL;
-		echo 'language: ', $response['language'], PHP_EOL;
-		echo 'iso-639-1: ', $response['iso-639-1'], PHP_EOL;
-		echo 'native speakers: ', $response['native-speakers'], PHP_EOL;
-	} else {
-		echo 'Error in the language detection call: ', $response['statusInfo'];
-	}
-
-
-	echo PHP_EOL;
-	echo PHP_EOL;
-	echo PHP_EOL;
-	echo '############################################', PHP_EOL;
-	echo '#   Author Extraction Example              #', PHP_EOL;
-	echo '############################################', PHP_EOL;
-	echo PHP_EOL;
-	echo PHP_EOL;
-	
-	echo 'Processing url: ', $demo_url, PHP_EOL;
-	echo PHP_EOL;
-
-	$response = $alchemyapi->author('url',$demo_url, null);
-
-	if ($response['status'] == 'OK') {
-		echo '## Response Object ##', PHP_EOL;
-		echo print_r($response);
-
-		echo PHP_EOL;
-		echo '## Author ##', PHP_EOL;
-		echo 'author: ', $response['author'], PHP_EOL;
-	} else {
-		echo 'Error in the author extraction call: ', $response['statusInfo'];
-	}
-
-
-	echo PHP_EOL;
-	echo PHP_EOL;
-	echo PHP_EOL;
-	echo '############################################', PHP_EOL;
-	echo '#   Feed Dection Example                   #', PHP_EOL;
+	echo '#   Feed Detection Example                 #', PHP_EOL;
 	echo '############################################', PHP_EOL;
 	echo PHP_EOL;
 	echo PHP_EOL;
@@ -303,6 +396,35 @@
 	}
 
 
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo '#   Microformats Parsing Example           #', PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	
+	echo 'Processing url: ', $demo_url, PHP_EOL;
+	echo PHP_EOL;
+
+	$response = $alchemyapi->microformats('url',$demo_url, null);
+
+	if ($response['status'] == 'OK') {
+		echo '## Response Object ##', PHP_EOL;
+		echo print_r($response);
+
+		echo PHP_EOL;
+		echo '## Microformats ##', PHP_EOL;
+		foreach ($response['microformats'] as $microformat) {
+			echo 'field: ', $microformat['field'], PHP_EOL;
+			echo 'data: ', $microformat['data'], PHP_EOL, PHP_EOL;
+		}
+	} else {
+		echo 'Error in the microformat parsing call: ', $response['statusInfo'];
+	}
+	
+	
 	echo PHP_EOL;
 	echo PHP_EOL;
 
