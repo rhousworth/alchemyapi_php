@@ -40,7 +40,7 @@ Just replace YOUR_API_KEY with your 40 character API key from AlchemyAPI, and yo
 
 	
 
-## Using the PHP SDK ##	
+## Using the PHP SDK ##
 
 This SDK makes accessing all of AlchemyAPI's text analysis functions with PHP easy. The following is a list of the available functions and how to use them within your application. For working code examples of these, please checkout the example code and run the example as described in the "Getting Started with the PHP SDK" section above. 
 
@@ -71,7 +71,9 @@ To extract entities, use:
 
 Where FLAVOR can be 'text','html', or 'url', DATA is your text, html or url content, and OPTIONS is an array containing the optional parameters to modify the behavior of the call.
 
-** Options **
+
+**Options**
+
 The following options are available for this call. To use, include your desired options into an array and pass it as the OPTIONS parameter in the call. 
 
 - disambiguate -> disambiguate entities (i.e. Apple the company vs. apple the fruit). 0: disabled, 1: enabled (default)
@@ -83,7 +85,8 @@ The following options are available for this call. To use, include your desired 
 - maxRetrieve -> the maximum number of entities to retrieve (default: 50)
 
 
-** Parsing **
+**Parsing**
+
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the text and type of each extracted entity:
 
 	<?php
@@ -113,7 +116,9 @@ To extract keywords, use:
 
 Where FLAVOR can be 'text','html', or 'url', DATA is your text, html or url content, and OPTIONS is an array containing the optional parameters to modify the behavior of the call.
 
-** Options **
+
+**Options**
+
 The following options are available for this call. To use, include your desired options into an array and pass it as the OPTIONS parameter in the call. 
 
 - keywordExtractMode -> normal (default), strict
@@ -122,7 +127,8 @@ The following options are available for this call. To use, include your desired 
 - maxRetrieve -> the max number of keywords returned (default: 50)
 
 
-** Parsing **
+**Parsing**
+
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the text and relevance of each extracted keyword:
 
 	<?php
@@ -158,7 +164,8 @@ To tag concepts, use:
 Where FLAVOR can be 'text','html', or 'url', DATA is your text, html or url content, and OPTIONS is an array containing the optional parameters to modify the behavior of the call.
 
 
-** Options **
+**Options**
+
 The following options are available for this call. To use, include your desired options into an array and pass it as the OPTIONS parameter in the call. 
 
 - maxRetrieve -> the maximum number of concepts to retrieve (default: 8)
@@ -166,7 +173,8 @@ The following options are available for this call. To use, include your desired 
 - showSourceText -> 0:disabled (default), 1: enabled
 
 
-** Parsing **
+**Parsing**
+
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the text and relevance of each concept:
 
 	<?php
@@ -196,13 +204,16 @@ To calculate document-level sentiment, use:
 
 Where FLAVOR can be 'text','html', or 'url', DATA is your text, html or url content, and OPTIONS is an array containing the optional parameters to modify the behavior of the call.
 
-** Options ** 
+
+**Options** 
+
 The following options are available for this call. To use, include your desired options into an array and pass it as the OPTIONS parameter in the call. 
 
 - showSourceText -> 0: disabled (default), 1: enabled
 
 
-** Parsing **
+**Parsing**
+
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the type and score of the document sentiment:
 
 	<?php
@@ -233,13 +244,15 @@ To calculate targeted sentiment for an entire document, use:
 
 Where FLAVOR can be 'text','html', or 'url', DATA is your text, html or url content, TARGET is the user-specified target, and OPTIONS is an array containing the optional parameters to modify the behavior of the call. 
 
-** Options **
+**Options**
+
 The following options are available for this call. To use, include your desired options into an array and pass it as the OPTIONS parameter in the call. 
 
 - showSourceText -> 0: disabled, 1: enabled
 
 
-** Parsing ** 
+**Parsing** 
+
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the type and score of the targeted sentiment:
 
 	<?php
@@ -270,14 +283,17 @@ To extract the text, use:
 
 Where FLAVOR can be 'html' or 'url', DATA is your html or url content and OPTIONS is an array containing the optional parameters to modify the behavior of the call. 
 
-** Options **
+
+**Options**
+
 The following options are available for this call. To use, include your desired options into an array and pass it as the OPTIONS parameter in the call. 
 
 - useMetadata -> utilize meta description data, 0: disabled, 1: enabled (default)
 - extractLinks -> include links, 0: disabled (default), 1: enabled.
 
 
-** Parsing **
+**Parsing**
+
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the extracted text:
 
 	<?php
@@ -311,11 +327,15 @@ To extract the author, use:
 	?>
 
 Where FLAVOR can be 'html' or 'url', DATA is your html or url content, and OPTIONS is an array containing the optional parameters to modify the behavior of the call. 
-** Options **
+
+
+**Options**
+
 There are no available options for this call.
 
 
-** Parsing **
+**Parsing**
+
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the author:
 
 	<?php
@@ -342,11 +362,14 @@ To detect the language, use:
 
 Where FLAVOR can be 'text', 'html' or 'url', DATA is your text, html or url content, and OPTIONS is an array containing the optional parameters to modify the behavior of the call.
 
-** Options **
+
+**Options**
+
 There are no available options for this call.
 
 
-** Parsing **
+**Parsing**
+
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the language and ISO-639-1 code:
 
 	<?php
@@ -374,13 +397,16 @@ To extract the title, use:
 
 Where FLAVOR can be 'html' or 'url', DATA is your html or url content, and OPTIONS is an array containing the optional parameters to modify the behavior of the call. 
 
-** Options **
+
+**Options**
+
 The following options are available for this call. To use, include your desired options into an array and pass it as the OPTIONS parameter in the call. 
 
 - useMetadata -> utilize title info embedded in meta data, 0: disabled, 1: enabled (default) 
 
 
-** Parsing **
+**Parsing**
+
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the title:
 
 	<?php
@@ -406,7 +432,9 @@ To extract relations, use:
 
 Where FLAVOR can be 'text','html', or 'url', DATA is your text, html or url content, and OPTIONS is an array containing the optional parameters to modify the behavior of the call. 
 
-** Options ** 
+
+**Options**
+
 The following options are available for this call. To use, include your desired options into an array and pass it as the OPTIONS parameter in the call. 
 
 - sentiment -> 0: disabled (default), 1: enabled. Requires one additional API transaction if enabled.
@@ -421,7 +449,8 @@ The following options are available for this call. To use, include your desired 
 - maxRetrieve -> the maximum number of relations to extract (default: 50, max: 100)
 
 
-** Parsing **
+**Parsing**
+
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the subject, action and object of each extracted relation:
 
 	<?php
@@ -462,13 +491,16 @@ To detect the category, use:
 
 Where FLAVOR can be 'text', 'html' or 'url', DATA is your text, html or url content, and OPTIONS is an array containing the optional parameters to modify the behavior of the call. 
 
-** Options ** 
+
+**Options**
+
 The following options are available for this call. To use, include your desired options into an array and pass it as the OPTIONS parameter in the call. 
 
 - showSourceText -> 0: disabled (default), 1: enabled
 
 
-** Parsing **
+**Parsing**
+
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the category:
 
 	<?php
@@ -494,11 +526,14 @@ To detect the feeds, use:
 
 Where FLAVOR can be 'html' or 'url', DATA is your html or url content, and OPTIONS is an array containing the optional parameters to modify the behavior of the call. 
 
-** Options ** 
+
+**Options**
+
 There are no available options for this call.
 
 
-** Parsing **
+**Parsing**
+
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the feeds:
 
 	<?php
@@ -527,11 +562,14 @@ To detect the microformats, use:
 
 Where FLAVOR can be 'html' or 'url', DATA is your html or url content, and OPTIONS is an array containing the optional parameters to modify the behavior of the call. 
 
-** Options **
+
+**Options**
+
 There are no options available for this call.
 
 
-** Parsing **
+**Parsing**
+
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the microformats:
 
 	<?php
