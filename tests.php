@@ -58,7 +58,7 @@
 	assert($response['status'] == 'OK');
 	$response = $alchemyapi->sentiment_targeted('html',$test_html,'language',null);
 	assert($response['status'] == 'OK');
-	$response = $alchemyapi->sentiment_targeted('url',$test_url,'investor',null);
+	$response = $alchemyapi->sentiment_targeted('url',$test_url,'Congress',null);
 	assert($response['status'] == 'OK');
 	echo 'Targeted sentiment tests complete!', PHP_EOL, PHP_EOL;
 

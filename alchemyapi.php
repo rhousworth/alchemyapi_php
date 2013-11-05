@@ -219,8 +219,8 @@ class AlchemyAPI {
 	*/
 	public function sentiment_targeted($flavor, $data, $target, $options) {
 		//Make sure this request supports the flavor
-		if (!array_key_exists($flavor, $this->_ENDPOINTS['sentiment'])) {
-			return array('status'=>'ERROR','statusInfo'=>'Sentiment analysis for ' . $flavor . ' not available');
+		if (!array_key_exists($flavor, $this->_ENDPOINTS['sentiment_targeted'])) {
+			return array('status'=>'ERROR','statusInfo'=>'Targeted sentiment analysis for ' . $flavor . ' not available');
 		}
 
 		if (!$target) {
@@ -229,7 +229,8 @@ class AlchemyAPI {
 
 		//Add the URL encoded data to the options and analyze
 		$options[$flavor] = rawurlencode($data);
-		return $this->analyze($this->_ENDPOINTS['sentiment'][$flavor], $options);
+		$options['target'] = $target;
+		return $this->analyze($this->_ENDPOINTS['sentiment_targeted'][$flavor], $options);
 	}
 
 
