@@ -110,8 +110,8 @@ class AlchemyAPI {
 			return array('status'=>'ERROR','statusInfo'=>'Entity extraction for ' . $flavor . ' not available');
 		}
 
-		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		//Add the data to the options and analyze
+		$options[$flavor] = $data;
 		return $this->analyze($this->_ENDPOINTS['entities'][$flavor], $options);
 	}
 
@@ -141,8 +141,8 @@ class AlchemyAPI {
 			return array('status'=>'ERROR','statusInfo'=>'Keyword extraction for ' . $flavor . ' not available');
 		}
 
-		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		//Add the data to the options and analyze
+		$options[$flavor] = $data;
 		return $this->analyze($this->_ENDPOINTS['keywords'][$flavor], $options);
 	}
 	
@@ -166,8 +166,8 @@ class AlchemyAPI {
 			return array('status'=>'ERROR','statusInfo'=>'Concept tagging for ' . $flavor . ' not available');
 		}
 
-		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		//Add the data to the options and analyze
+		$options[$flavor] = $data;
 		return $this->analyze($this->_ENDPOINTS['concepts'][$flavor], $options);
 	}
 
@@ -194,8 +194,8 @@ class AlchemyAPI {
 			return array('status'=>'ERROR','statusInfo'=>'Sentiment analysis for ' . $flavor . ' not available');
 		}
 
-		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		//Add the data to the options and analyze
+		$options[$flavor] = $data;
 		return $this->analyze($this->_ENDPOINTS['sentiment'][$flavor], $options);
 	}
 
@@ -228,7 +228,7 @@ class AlchemyAPI {
 		}
 
 		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		$options[$flavor] = $data;
 		$options['target'] = $target;
 		return $this->analyze($this->_ENDPOINTS['sentiment_targeted'][$flavor], $options);
 	}
@@ -257,8 +257,8 @@ class AlchemyAPI {
 			return array('status'=>'ERROR','statusInfo'=>'Clean text extraction for ' . $flavor . ' not available');
 		}
 
-		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		//Add the data to the options and analyze
+		$options[$flavor] = $data;
 		return $this->analyze($this->_ENDPOINTS['text'][$flavor], $options);
 	}
 
@@ -285,8 +285,8 @@ class AlchemyAPI {
 			return array('status'=>'ERROR','statusInfo'=>'Raw text extraction for ' . $flavor . ' not available');
 		}
 
-		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		//Add the data to the options and analyze
+		$options[$flavor] = $data;
 		return $this->analyze($this->_ENDPOINTS['text_raw'][$flavor], $options);
 	}
 	
@@ -313,8 +313,8 @@ class AlchemyAPI {
 			return array('status'=>'ERROR','statusInfo'=>'Author extration for ' . $flavor . ' not available');
 		}
 
-		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		//Add the data to the options and analyze
+		$options[$flavor] = $data;
 		return $this->analyze($this->_ENDPOINTS['author'][$flavor], $options);
 	}
 
@@ -341,8 +341,8 @@ class AlchemyAPI {
 			return array('status'=>'ERROR','statusInfo'=>'Language detection for ' . $flavor . ' not available');
 		}
 
-		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		//Add the data to the options and analyze
+		$options[$flavor] = $data;
 		return $this->analyze($this->_ENDPOINTS['language'][$flavor], $options);
 	}
 
@@ -369,8 +369,8 @@ class AlchemyAPI {
 			return array('status'=>'ERROR','statusInfo'=>'Title text extraction for ' . $flavor . ' not available');
 		}
 
-		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		//Add the data to the options and analyze
+		$options[$flavor] = $data;
 		return $this->analyze($this->_ENDPOINTS['title'][$flavor], $options);
 	}
 
@@ -406,8 +406,8 @@ class AlchemyAPI {
 			return array('status'=>'ERROR','statusInfo'=>'Relation extraction for ' . $flavor . ' not available');
 		}
 
-		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		//Add the data to the options and analyze
+		$options[$flavor] = $data;
 		return $this->analyze($this->_ENDPOINTS['relations'][$flavor], $options);
 	}
 
@@ -434,8 +434,8 @@ class AlchemyAPI {
 			return array('status'=>'ERROR','statusInfo'=>'Text categorization for ' . $flavor . ' not available');
 		}
 
-		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		//Add the data to the options and analyze
+		$options[$flavor] = $data;
 		return $this->analyze($this->_ENDPOINTS['category'][$flavor], $options);
 	}
 	
@@ -462,8 +462,8 @@ class AlchemyAPI {
 			return array('status'=>'ERROR','statusInfo'=>'Feed detection for ' . $flavor . ' not available');
 		}
 
-		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		//Add the data to the options and analyze
+		$options[$flavor] = $data;
 		return $this->analyze($this->_ENDPOINTS['feeds'][$flavor], $options);
 	}
 
@@ -490,8 +490,8 @@ class AlchemyAPI {
 			return array('status'=>'ERROR','statusInfo'=>'Microformat parsing for ' . $flavor . ' not available');
 		}
 
-		//Add the URL encoded data to the options and analyze
-		$options[$flavor] = rawurlencode($data);
+		//Add the data to the options and analyze
+		$options[$flavor] = $data;
 		return $this->analyze($this->_ENDPOINTS['microformats'][$flavor], $options);
 	}
 
@@ -506,21 +506,17 @@ class AlchemyAPI {
 	  *	OUTPUT:
 	  *	The response, already converted from JSON to a PHP object. 
 	*/
-	private function analyze($url, $params) {
+	private function analyze($endpoint, $params) {
 		//Insert the base URL
-		$url = $this->_BASE_URL . $url;
+		$url = $this->_BASE_URL . $endpoint;
 
 		//Add the API Key and set the output mode to JSON
-		$url = $url . '?apikey=' . $this->_api_key . '&outputMode=json';
-
-		//Add the remaining parameters
-		foreach($params as $key => $value) {
-			$url = $url . '&' . $key . '=' . $value;
-		}
+		$params['apikey'] = $this->_api_key;
+		$params['outputMode'] = 'json';
 		
 		//Create the HTTP header
-		$header = array('http' => array('method' => 'POST', 'Content-type'=> 'application/x-www-form-urlencoded'));
-		
+		$header = array('http' => array('method' => 'POST','header'=>'Content-Type: application/x-www-form-urlencode', 'content'=>http_build_query($params)));
+
 		//Fire off the HTTP Request
 		try {
 			$fp = @fopen($url, 'rb',false, stream_context_create($header));
