@@ -1,5 +1,22 @@
 <?php
 
+/**
+   Copyright 2013 AlchemyAPI
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+
+
 class AlchemyAPI {
 	
 	private $_api_key;
@@ -546,6 +563,7 @@ if (php_sapi_name() == 'cli') {
 		if (strlen($argv[1]) == 40) {
 			file_put_contents('api_key.txt',$argv[1]);
 			echo 'Key: ' . $argv[1] . ' successfully written to api_key.txt', PHP_EOL;
+			echo 'You are now ready to start using AlchemyAPI. For example, run: php example.php', PHP_EOL;
 		} else {
 			echo 'Invalid key! Make sure it is 40 characters in length', PHP_EOL;
 		}
