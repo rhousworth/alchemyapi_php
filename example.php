@@ -195,7 +195,7 @@
 	echo 'Target: Denver, Colorado', PHP_EOL;
 	echo PHP_EOL;
 
-	$response = $alchemyapi->sentiment_targeted('text',$demo_text,'Denver, Colorado', null);
+	$response = $alchemyapi->sentiment_targeted('text',$demo_text,'Denver', null);
 
 	if ($response['status'] == 'OK') {
 		echo '## Response Object ##', PHP_EOL;
