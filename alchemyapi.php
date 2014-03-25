@@ -717,17 +717,15 @@ class AlchemyAPI {
   *
   * OUTPUT:
   * none
-*/  
-if (php_sapi_name() == 'cli') {
-	if (count($argv) == 2) {
-		if (strlen($argv[1]) == 40) {
-			file_put_contents('api_key.txt',$argv[1]);
-			echo 'Key: ' . $argv[1] . ' successfully written to api_key.txt', PHP_EOL;
-			echo 'You are now ready to start using AlchemyAPI. For example, run: php example.php', PHP_EOL;
-		} else {
-			echo 'Invalid key! Make sure it is 40 characters in length', PHP_EOL;
-		}
-	}
+*/
+if (php_sapi_name() == 'cli' && isset($argv) && count($argv) == 2) {
+  if (strlen($argv[1]) == 40) {
+    file_put_contents('api_key.txt',$argv[1]);
+    echo 'Key: ' . $argv[1] . ' successfully written to api_key.txt', PHP_EOL;
+    echo 'You are now ready to start using AlchemyAPI. For example, run: php example.php', PHP_EOL;
+  } else {
+    echo 'Invalid key! Make sure it is 40 characters in length', PHP_EOL;
+  }
 }
 
 ?>
