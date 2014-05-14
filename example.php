@@ -22,7 +22,6 @@
 	$demo_text = 'Yesterday dumb Bob destroyed my fancy iPhone in beautiful Denver, Colorado. I guess I will have to head over to the Apple Store and buy a new one.';
 	$demo_url = 'http://www.npr.org/2013/11/26/247336038/dont-stuff-the-turkey-and-other-tips-from-americas-test-kitchen';
 	$demo_html = '<html><head><title>PHP Demo | AlchemyAPI</title></head><body><h1>Did you know that AlchemyAPI works on HTML?</h1><p>Well, you do now.</p></body></html>';
-	$demo_image_url = 'http://media.npr.org/assets/img/2013/11/26/8069135368_e3e5e07a5f_o-3b8554ba72c125ca7d2e4b24dfd880b17fd405a1-s40.jpg';
 
 	echo PHP_EOL;
 	echo PHP_EOL;  
@@ -57,10 +56,10 @@
 	echo PHP_EOL;
 	echo PHP_EOL;
 	
-	echo 'Processing Image URL: ', $demo_image_url, PHP_EOL;
+	echo 'Processing Image URL: ', $demo_url, PHP_EOL;
 	echo PHP_EOL;
 
-	$response = $alchemyapi->image_keywords('url', $demo_image_url, array('extractMode'=>'trust-metadata'));
+	$response = $alchemyapi->image_keywords('url', $demo_url, array('extractMode'=>'trust-metadata'));
 
 	if ($response['status'] == 'OK') {
 		echo '## Response Object ##', PHP_EOL;
@@ -69,7 +68,8 @@
 		echo PHP_EOL;
 		echo '## Image Keywords ##', PHP_EOL;
 		foreach ($response['imageKeywords'] as $imageKeywords) {
-			echo 'image keyword: ', $imageKeywords['text'], PHP_EOL;			
+			echo 'image keyword: ', $imageKeywords['text'], PHP_EOL;	
+			echo 'score: ', $imageKeywords['score'], PHP_EOL;		
 			echo PHP_EOL;
 		}
 	} else {
