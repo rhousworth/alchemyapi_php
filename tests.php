@@ -23,7 +23,15 @@
 	$test_text = 'Bob broke my heart, and then made up this silly sentence to test the PHP SDK';  
 	$test_html = '<html><head><title>The best SDK Test | AlchemyAPI</title></head><body><h1>Hello World!</h1><p>My favorite language is PHP</p></body></html>';
 	$test_url = 'http://www.nytimes.com/2013/07/13/us/politics/a-day-of-friction-notable-even-for-a-fractious-congress.html?_r=0';
+	$test_image_url = 'http://media.npr.org/assets/img/2013/11/26/8069135368_e3e5e07a5f_o-3b8554ba72c125ca7d2e4b24dfd880b17fd405a1-s40.jpg';
 
+	//images
+	echo 'Checking image keywords . . . ', PHP_EOL;
+	$response = $alchemyapi->image_keywords('url', $test_image_url, null);
+	assert($response['status'] == 'OK');
+	$response = $alchemyapi->image_keywords('random', $test_image_url, null);
+	assert($response['status'] == 'ERROR');	//invalid flavor
+	echo 'Entity tests complete!', PHP_EOL, PHP_EOL;
 
 	//Entities
 	echo 'Checking entities . . . ', PHP_EOL;
