@@ -137,8 +137,13 @@ class AlchemyAPI {
 		}
 
 		//Add the image to the options and analyze
-		$options[$flavor] = $image;
-		return $this->analyze($this->_ENDPOINTS['image_keywords'][$flavor], $options);
+		if($flavor=='url'){
+			$options[$flavor] = $image;
+			return $this->analyze($this->_ENDPOINTS['image_keywords'][$flavor], $options);
+		}
+		else{
+			return $this->analyzeImage($this->_ENDPOINTS['image_keywords'][$flavor], $options, $image);	
+		}
 	}
 
 
@@ -730,6 +735,30 @@ class AlchemyAPI {
 		
 		//Create the HTTP header
 		$header = array('http' => array('method' => 'POST','header'=>'Content-Type: application/x-www-form-urlencode', 'content'=>http_build_query($params)));
+
+		//Fire off the HTTP Request
+		try {
+			$fp = @fopen($url, 'rb',false, stream_context_create($header));
+			$response = @stream_get_contents($fp);
+			fclose($fp);
+			return json_decode($response, true);
+		} catch (Exception $e) {
+			return array('status'=>'ERROR', 'statusInfo'=>'Network error');
+		}
+	}
+	//Use to create request for image API
+		private function analyzeImage($endpoint, $params, $imageData) {
+		
+
+		//Add the API Key and set the output mode to JSON
+		$params['apikey'] = $this->_api_key;
+		$params['outputMode'] = 'json';
+
+		//Insert the base URL
+		$url = $this->_BASE_URL . $endpoint . '?' . http_build_query($params);
+		
+		//Create the HTTP header
+		$header = array('http' => array('method' => 'POST','header'=>'Content-Type: application/x-www-form-urlencode', 'content'=>$imageData));
 
 		//Fire off the HTTP Request
 		try {

@@ -78,6 +78,46 @@
 	echo PHP_EOL;
 	echo PHP_EOL;
 	echo PHP_EOL;
+	echo PHP_EOL;
+	/*
+	$imageName = "grumpy-cat-meme-hmmm.jpg";
+	$imageFile = fopen($imageName, "r") or die("Unable to open file!");
+	$imageData = fread($imageFile,filesize($imageName));
+	fclose($imageFile);
+
+
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo '#       Image Keyword Example with image   #', PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	
+	echo 'Processing Image File: ', $imageName, PHP_EOL;
+	echo PHP_EOL;
+
+	$response = $alchemyapi->image_keywords('image', $imageData, array('imagePostMode'=>'raw'));
+
+	if ($response['status'] == 'OK') {
+		echo '## Response Object ##', PHP_EOL;
+		echo print_r($response);
+
+		echo PHP_EOL;
+		echo '## Image Keywords ##', PHP_EOL;
+		foreach ($response['imageKeywords'] as $imageKeywords) {
+			echo 'image keyword: ', $imageKeywords['text'], PHP_EOL;	
+			echo 'score: ', $imageKeywords['score'], PHP_EOL;		
+			echo PHP_EOL;
+		}
+	} else {
+		echo 'Error in the image keyword extraction call: ', $response['statusInfo'];
+	}
+	echo PHP_EOL;
+	echo PHP_EOL;*/
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
 	echo '############################################', PHP_EOL;
 	echo '#   Entity Extraction Example              #', PHP_EOL;
 	echo '############################################', PHP_EOL;
