@@ -23,7 +23,44 @@
 	$test_text = 'Bob broke my heart, and then made up this silly sentence to test the PHP SDK';  
 	$test_html = '<html><head><title>The best SDK Test | AlchemyAPI</title></head><body><h1>Hello World!</h1><p>My favorite language is PHP</p></body></html>';
 	$test_url = 'http://www.nytimes.com/2013/07/13/us/politics/a-day-of-friction-notable-even-for-a-fractious-congress.html?_r=0';
+	$imageName = "grumpy-cat-meme-hmmm.jpg";
+	$imageFile = fopen($imageName, "r") or die("Unable to open file!");
+	$imageData = fread($imageFile,filesize($imageName));
+	fclose($imageFile);
 
+	//image keywords
+	echo 'Checking image keywords . . . ', PHP_EOL;
+	$response = $alchemyapi->image_keywords('url', $test_url, null);
+	assert($response['status'] == 'OK');
+	$response = $alchemyapi->image_keywords('image', $imageData, array('imagePostMode'=>'raw'));
+	assert($response['status'] == 'OK');
+	$response = $alchemyapi->image_keywords('random', $test_url, null);
+	assert($response['status'] == 'ERROR');	//invalid flavor
+	echo 'Image keyword tests complete!', PHP_EOL, PHP_EOL;
+
+	//image extraction
+	echo 'Checking image extraction . . . ', PHP_EOL;
+	$response = $alchemyapi->imageExtraction('url',$test_url, null);
+	assert($response['status'] == 'OK');
+	$response = $alchemyapi->imageExtraction('random', $test_url, null);
+	assert($response['status'] == 'ERROR');	//invalid flavor
+	echo 'Image extraction tests complete!', PHP_EOL, PHP_EOL;
+
+	//taxonomy
+	echo 'Checking Taxonomy . . . ', PHP_EOL;
+	$response = $alchemyapi->taxonomy('text',$test_text, null);
+	assert($response['status'] == 'OK');
+	$response = $alchemyapi->taxonomy('random', $test_text, null);
+	assert($response['status'] == 'ERROR');	//invalid flavor
+	echo 'Taxonomy tests complete!', PHP_EOL, PHP_EOL;
+
+	//combined
+	echo 'Checking Combined . . . ', PHP_EOL;
+	$response = $alchemyapi->combined('text',$test_text, null);
+	assert($response['status'] == 'OK');
+	$response = $alchemyapi->combined('random', $test_text, null);
+	assert($response['status'] == 'ERROR');	//invalid flavor
+	echo 'Combined tests complete!', PHP_EOL, PHP_EOL;
 
 	//Entities
 	echo 'Checking entities . . . ', PHP_EOL;

@@ -23,7 +23,6 @@
 	$demo_url = 'http://www.npr.org/2013/11/26/247336038/dont-stuff-the-turkey-and-other-tips-from-americas-test-kitchen';
 	$demo_html = '<html><head><title>PHP Demo | AlchemyAPI</title></head><body><h1>Did you know that AlchemyAPI works on HTML?</h1><p>Well, you do now.</p></body></html>';
 
-
 	echo PHP_EOL;
 	echo PHP_EOL;  
 	echo '            ,                                                                                                                              ', PHP_EOL;
@@ -49,7 +48,74 @@
 	echo '          :~                                                                                                                               ', PHP_EOL;
 
 
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo '#       Image Keyword Example              #', PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	
+	echo 'Processing Image URL: ', $demo_url, PHP_EOL;
+	echo PHP_EOL;
 
+	$response = $alchemyapi->image_keywords('url', $demo_url, array('extractMode'=>'trust-metadata'));
+
+	if ($response['status'] == 'OK') {
+		echo '## Response Object ##', PHP_EOL;
+		echo print_r($response);
+
+		echo PHP_EOL;
+		echo '## Image Keywords ##', PHP_EOL;
+		foreach ($response['imageKeywords'] as $imageKeywords) {
+			echo 'image keyword: ', $imageKeywords['text'], PHP_EOL;	
+			echo 'score: ', $imageKeywords['score'], PHP_EOL;		
+			echo PHP_EOL;
+		}
+	} else {
+		echo 'Error in the image keyword extraction call: ', $response['statusInfo'];
+	}
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	/*
+	$imageName = "grumpy-cat-meme-hmmm.jpg";
+	$imageFile = fopen($imageName, "r") or die("Unable to open file!");
+	$imageData = fread($imageFile,filesize($imageName));
+	fclose($imageFile);
+
+
+	echo PHP_EOL;
+	echo PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo '#       Image Keyword Example with image   #', PHP_EOL;
+	echo '############################################', PHP_EOL;
+	echo PHP_EOL;
+	echo PHP_EOL;
+	
+	echo 'Processing Image File: ', $imageName, PHP_EOL;
+	echo PHP_EOL;
+
+	$response = $alchemyapi->image_keywords('image', $imageData, array('imagePostMode'=>'raw'));
+
+	if ($response['status'] == 'OK') {
+		echo '## Response Object ##', PHP_EOL;
+		echo print_r($response);
+
+		echo PHP_EOL;
+		echo '## Image Keywords ##', PHP_EOL;
+		foreach ($response['imageKeywords'] as $imageKeywords) {
+			echo 'image keyword: ', $imageKeywords['text'], PHP_EOL;	
+			echo 'score: ', $imageKeywords['score'], PHP_EOL;		
+			echo PHP_EOL;
+		}
+	} else {
+		echo 'Error in the image keyword extraction call: ', $response['statusInfo'];
+	}
+	echo PHP_EOL;
+	echo PHP_EOL;*/
+	echo PHP_EOL;
 	echo PHP_EOL;
 	echo PHP_EOL;
 	echo '############################################', PHP_EOL;

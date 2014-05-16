@@ -57,6 +57,51 @@ To use each function, you must first create an AlchemyAPI object. The easiest wa
 
 You can now use this object to access AlchemyAPI's text analysis functions. 
 
+### Image Keywords ###
+
+The Image Keywords API tags an image identified by a URL or image data posted in the body of an html request. For more high-level information on AlchemyAPI's Image keywords API, please visit: http://www.alchemyapi.com/products/features/image-tagging. For more technical information, please refer to the docs: http://www.alchemyapi.com/api/image-tagging.
+
+To extract entities, use:
+
+	<?php
+		$response = $alchemyapi->image_keywords(FLAVOR, DATA, OPTIONS);
+	?>
+
+Where FLAVOR can be 'url' or 'image' DATA is your url or uri-argument encoded image data, and OPTIONS is an array containing the optional parameters to modify the behavior of the call.
+
+
+**Options**
+
+The following options are available for this call. To use, include your desired options into an array and pass it as the OPTIONS parameter in the call. 
+
+-	imagePostMode -> (only applicable to image flavor)
+-		not-raw :  pass an unencoded image file with "image=URI_ENCODED_DATA"
+-		raw     :  pass an unencoded image file using POST
+-	extractMode -> 
+-     always-infer    :  (more CPU intensive, more accurate)
+-     trust-metadata  :  (less CPU intensive, less accurate) (default)
+-     only-metadata   :  (even less CPU intensive, less accurate)
+
+**Parsing**
+
+To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the keyword and score of each tagged image:
+
+	<?php
+		$response = $alchemyapi->image_keywords('url','http://www.lolcats.com/images/u/08/50/lolcatsdotcomur5dhkw464f8hb16.jpg', null);
+		foreach ($response['imageKeywords'] as $imagekeyword) {
+			echo 'keyword: ', $imagekeyword['text'], PHP_EOL;
+			echo 'score: ', $imagekeyword['score'], PHP_EOL;
+		}
+	?>
+
+This should print out:
+	
+	keyword: cat
+	score: 0.999697
+	keyword: kitten
+	score: 0.942676
+
+	
 
 
 ### Entities ###

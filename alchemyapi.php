@@ -99,9 +99,51 @@ class AlchemyAPI {
 		$this->_ENDPOINTS['combined']['url'] = '/url/URLGetCombinedData';
 		$this->_ENDPOINTS['combined']['text'] = '/text/TextGetCombinedData';
 		$this->_ENDPOINTS['image']['url'] = '/url/URLGetImage';
+		$this->_ENDPOINTS['image_keywords']['url'] = '/url/URLGetRankedImageKeywords';
+		$this->_ENDPOINTS['image_keywords']['image'] = '/image/ImageGetRankedImageKeywords';
 		$this->_ENDPOINTS['taxonomy']['url'] = '/url/URLGetRankedTaxonomy';
 		$this->_ENDPOINTS['taxonomy']['html'] = '/html/HTMLGetRankedTaxonomy';
 		$this->_ENDPOINTS['taxonomy']['text'] = '/text/TextGetRankedTaxonomy';
+	}
+
+
+
+	/**
+	  *	Returns tag for an image URL or image included in the body of the http request.
+	  *	For an overview, please refer to: http://www.alchemyapi.com/products/features/image-tagging/ 
+	  *	For the docs, please refer to: http://www.alchemyapi.com/api/image-tagging/
+	  *	
+	  *	INPUT:
+	  *	flavor -> which version of the call, i.e. url or image.
+	  *	image -> the image to analyze, either the url or image data.
+	  *	options -> various parameters that can be used to adjust how the API works, see below for more info on the available options.
+	  *	
+	  *	Available Options:
+	  *	imagePostMode -> (only applicable to image flavor)
+	  *		not-raw :  pass an unencoded image file with "image=URI_ENCODED_DATA"
+	  *		raw     :  pass an unencoded image file using POST
+	  *	extractMode -> 
+	  *     always-infer    :  (more CPU intensive, more accurate)
+	  *     trust-metadata  :  (less CPU intensive, less accurate) (default)
+	  *     only-metadata   :  (even less CPU intensive, less accurate)
+	  *
+	  *	OUTPUT:
+	  *	The response, already converted from JSON to a PHP object. 
+	*/
+	public function image_keywords($flavor, $image, $options) {
+		//Make sure this request supports the flavor
+		if (!array_key_exists($flavor, $this->_ENDPOINTS['image_keywords'])) {
+			return array('status'=>'ERROR','statusInfo'=>'Image tagging for ' . $flavor . ' not available');
+		}
+
+		//Add the image to the options and analyze
+		if($flavor=='url'){
+			$options[$flavor] = $image;
+			return $this->analyze($this->_ENDPOINTS['image_keywords'][$flavor], $options);
+		}
+		else{
+			return $this->analyzeImage($this->_ENDPOINTS['image_keywords'][$flavor], $options, $image);	
+		}
 	}
 
 
@@ -693,6 +735,30 @@ class AlchemyAPI {
 		
 		//Create the HTTP header
 		$header = array('http' => array('method' => 'POST','header'=>'Content-Type: application/x-www-form-urlencode', 'content'=>http_build_query($params)));
+
+		//Fire off the HTTP Request
+		try {
+			$fp = @fopen($url, 'rb',false, stream_context_create($header));
+			$response = @stream_get_contents($fp);
+			fclose($fp);
+			return json_decode($response, true);
+		} catch (Exception $e) {
+			return array('status'=>'ERROR', 'statusInfo'=>'Network error');
+		}
+	}
+	//Use to create request for image API
+		private function analyzeImage($endpoint, $params, $imageData) {
+		
+
+		//Add the API Key and set the output mode to JSON
+		$params['apikey'] = $this->_api_key;
+		$params['outputMode'] = 'json';
+
+		//Insert the base URL
+		$url = $this->_BASE_URL . $endpoint . '?' . http_build_query($params);
+		
+		//Create the HTTP header
+		$header = array('http' => array('method' => 'POST','header'=>'Content-Type: application/x-www-form-urlencode', 'content'=>$imageData));
 
 		//Fire off the HTTP Request
 		try {
