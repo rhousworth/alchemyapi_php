@@ -177,7 +177,7 @@ The following options are available for this call. To use, include your desired 
 To parse the results, simply step through the response structure that is detailed in the docs. For example, here's how to print the text and relevance of each extracted keyword:
 
 	<?php
-		$response = $alchemyapi->keywords('text', 'Bunnies are nice but sometimes robots are evil', array('sentiment'=>1);
+		$response = $alchemyapi->keywords('text', 'Bunnies are nice but sometimes robots are evil', array('sentiment'=>1));
 		foreach ($response['keywords'] as $keyword) {
 			echo 'keyword: ', $keyword['text'], PHP_EOL;
 			echo 'relevance: ', $keyword['relevance'], PHP_EOL;
