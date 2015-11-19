@@ -23,41 +23,14 @@ class AlchemyAPI {
 	private $_ENDPOINTS;
 	private $_BASE_URL = 'http://access.alchemyapi.com/calls';
 
-
-	/** 
-	  *	Initializes the SDK so it can send requests to AlchemyAPI for analysis.
-	  *	It loads the API key from api_key.txt and configures the endpoints.
-	  *	This function will be called automatically when needed the AlchemyAPI object is created.
-	  *
-	  * Note: if you don't have an API key, register for one at: http://www.alchemyapi.com/api/register.html
-	  *
-	  * INPUT:
-	  * none
-	  *
-	  * OUTPUT:
-	  * none
-	*/ 
-	public function AlchemyAPI() {
-		//Load the API Key from api_key.txt
-		$key = trim(file_get_contents("api_key.txt"));
-	
-		if (!$key) {
-			//Keys should not be blank
-			echo 'The api_key.txt file appears to be blank, please copy/paste your API key in the file: api_key.txt', PHP_EOL;
-			echo 'If you do not have an API Key from AlchemyAPI, please register for one at: http://www.alchemyapi.com/api/register.html', PHP_EOL;
-			file_put_contents('api_key.txt','');
-			exit(1);
-		}
-
-		if (strlen($key) != 40) {
-			echo strlen($key), PHP_EOL;
-			//Keys should be 40 characters long
-			echo 'It appears that the key in api_key.txt is invalid. Please make sure the file only includes the API key, and it is the correct one.', PHP_EOL;
-			exit(1);
-		}
-
+	/**
+	 * Constructor
+	 *
+	 * @param string
+	 * @return void
+	 */
+	public function __construct($key)  {
 		$this->_api_key = $key;
-
 
 		//Initialize the API Endpoints
 		$this->_ENDPOINTS['sentiment']['url'] = '/url/URLGetTextSentiment';
@@ -105,8 +78,6 @@ class AlchemyAPI {
 		$this->_ENDPOINTS['taxonomy']['html'] = '/html/HTMLGetRankedTaxonomy';
 		$this->_ENDPOINTS['taxonomy']['text'] = '/text/TextGetRankedTaxonomy';
 	}
-
-
 
 	/**
 	  *	Returns tag for an image URL or image included in the body of the http request.
