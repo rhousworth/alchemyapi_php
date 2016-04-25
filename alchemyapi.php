@@ -717,8 +717,10 @@ class AlchemyAPI {
 			return array('status'=>'ERROR', 'statusInfo'=>'Network error');
 		}
 	}
+
+
 	//Use to create request for image API
-		private function analyzeImage($endpoint, $params, $imageData) {
+    private function analyzeImage($endpoint, $params, $imageData) {
 		
 
 		//Add the API Key and set the output mode to JSON
@@ -736,7 +738,11 @@ class AlchemyAPI {
 			$fp = @fopen($url, 'rb',false, stream_context_create($header));
 			$response = @stream_get_contents($fp);
 			fclose($fp);
+
+            //Clean up response and return
+            $response = str_replace('\a', '\\a', $response);
 			return json_decode($response, true);
+            
 		} catch (Exception $e) {
 			return array('status'=>'ERROR', 'statusInfo'=>'Network error');
 		}
