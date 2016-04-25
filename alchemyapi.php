@@ -691,7 +691,7 @@ class AlchemyAPI {
      * @return string - decoded response
      */
     private function decodeResponse($response) {
-        $response = str_replace('\a', '\\a', $response);
+        $response = str_replace('\a', '\\\a', $response);
         return json_decode($response, true);
     }
 	
