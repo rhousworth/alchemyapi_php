@@ -683,7 +683,17 @@ class AlchemyAPI {
 	  //Add the data to the options and analyze
 	  $options[$flavor] = $data;
 	  return $this->analyze($this->_ENDPOINTS['combined'][$flavor], $options);
-	}	
+	}
+
+    /**
+     * Cleans and decodes an alchemy response
+     * @param $response
+     * @return string - decoded response
+     */
+    private function decodeResponse($response) {
+        $response = str_replace('\a', '\\a', $response);
+        return json_decode($response, true);
+    }
 	
 
 	/**
@@ -712,7 +722,7 @@ class AlchemyAPI {
 			$fp = @fopen($url, 'rb',false, stream_context_create($header));
 			$response = @stream_get_contents($fp);
 			fclose($fp);
-			return json_decode($response, true);
+			return $this->decodeResponse($response);
 		} catch (Exception $e) {
 			return array('status'=>'ERROR', 'statusInfo'=>'Network error');
 		}
@@ -738,11 +748,7 @@ class AlchemyAPI {
 			$fp = @fopen($url, 'rb',false, stream_context_create($header));
 			$response = @stream_get_contents($fp);
 			fclose($fp);
-
-            //Clean up response and return
-            $response = str_replace('\a', '\\a', $response);
-			return json_decode($response, true);
-            
+            return $this->decodeResponse($response);
 		} catch (Exception $e) {
 			return array('status'=>'ERROR', 'statusInfo'=>'Network error');
 		}
